@@ -6,23 +6,8 @@ on:
   repository_dispatch:
     types: [veracode-sca-scan]
     
-jobs:
-  register:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: veracode/Veracode-github-app@aws-ecs-dynamodb
-      with:
-        callback_url: ${{ github.event.client_payload.callback_url }}
-        sha: ${{ github.event.client_payload.sha }}
-        branch: ${{ github.event.client_payload.branch }}
-        run_id: ${{ github.run_id }}
-        repository_owner: ${{ github.event.client_payload.repository.owner }}
-        repository_name: ${{ github.event.client_payload.repository.name }}
-        event_type: ${{ github.event.client_payload.event_type }}
-        enforce: true
-       
+jobs:       
   veracode-sca-scan:
-    needs: [register]
     runs-on: ubuntu-latest
     name: Veracode Component Analysis
 
